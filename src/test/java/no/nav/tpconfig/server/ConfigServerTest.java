@@ -40,7 +40,7 @@ public class ConfigServerTest {
     }
 
     @Test
-    public void tpNumberServiceAccount_Returns404_When_NonExistingTpNrIsProvided() throws Exception {
+    public void tpNumberServiceAccount_Returns404AndErrorMessage_When_NonExistingTpNrIsProvided() throws Exception {
         String nonExistingTpNumber = "999999";
         String testUrl = "http://localhost:8080/serviceaccount/" + nonExistingTpNumber;
 
@@ -53,7 +53,7 @@ public class ConfigServerTest {
     }
 
     @Test
-    public void tpNumberServiceAccount_Returns400_When_MangledUrlIsUsed() throws Exception {
+    public void tpNumberServiceAccount_Returns404_When_MangledUrlIsUsed() throws Exception {
         String tpNumber= "3010";
         String testUrl = "http://localhost:8080/serviceaccoun/" + tpNumber;
 

@@ -7,6 +7,10 @@
     <groupId>no.nav.tpconfig</groupId>
     <artifactId>tpconfig</artifactId>
     <version>1</version>
+    <packaging>jar</packaging>
+
+    <name>tpconfig</name>
+    <description>Konfigurasjon og ruting mellom TP-ordninger og TP-leverandører</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
