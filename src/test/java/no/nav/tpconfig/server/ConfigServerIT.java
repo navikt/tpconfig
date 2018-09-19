@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class ConfigServerTest {
+public class ConfigServerIT {
 
     private static ConfigServer server;
     private static OkHttpClient client;
