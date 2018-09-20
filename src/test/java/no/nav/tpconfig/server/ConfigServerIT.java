@@ -18,13 +18,13 @@ public class ConfigServerIT {
     @BeforeClass
     public static void setUp() {
         server = new ConfigServer("localhost", 8080);
-        server.runServer();
+        server.run();
         client = new OkHttpClient();
     }
 
     @AfterClass
     public static void tearDown() {
-        server.stopServer();
+        server.stop();
     }
 
     @Test

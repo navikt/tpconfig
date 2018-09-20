@@ -9,7 +9,6 @@ public class ConfigServer {
     private final String IS_ALIVE_URL_PATH = "isAlive";
     private final String IS_READY_URL_PATH = "isReady";
     private final String TP_NR_FOR_LEVERANDOER_PATH = "serviceaccount/{tpnr}";
-    private final String TSS_NR_FOR_LEVERANDOER_PATH = "tpleverandoer/{tssnr}"; //TODO: Implement
 
     private Undertow server;
     private String hostName;
@@ -20,7 +19,7 @@ public class ConfigServer {
         this.port = port;
     }
 
-    public void runServer() {
+    public void run() {
         this.server = Undertow.builder()
                 .addHttpListener(port, hostName)
                 .setHandler(new RoutingHandler()
@@ -31,7 +30,7 @@ public class ConfigServer {
         server.start();
     }
 
-    public void stopServer() {
+    public void stop() {
         this.server.stop();
     }
 }

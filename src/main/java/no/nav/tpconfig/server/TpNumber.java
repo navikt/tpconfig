@@ -15,7 +15,7 @@ class TpNumber {
         LOG.info(exchange.getRequestURL());
 
         try {
-            String tpnr = UrlParam.getParamValue(exchange, "tpnr");
+            String tpnr = UrlParam.value(exchange, "tpnr");
             String serviceAccount = TpOrdning.tpOrdningFromTpNumber(tpnr).tpLeverandoer().serviceAccount();
             exchange.setStatusCode(StatusCodes.OK);
             exchange.getResponseSender().send(serviceAccount);

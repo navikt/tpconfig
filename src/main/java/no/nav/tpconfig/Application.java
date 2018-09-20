@@ -16,7 +16,7 @@ class Application {
         try {
             String hostName = InetAddress.getLocalHost().getHostName();
             ConfigServer configServer = new ConfigServer(hostName, 8080);
-            configServer.runServer();
+            configServer.run();
         } catch(UnknownHostException e) {
             //TODO: Log
         }
