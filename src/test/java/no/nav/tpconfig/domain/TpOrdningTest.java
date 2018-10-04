@@ -34,4 +34,16 @@ public class TpOrdningTest {
         TpOrdning tpOrdning = TpOrdning.tpOrdningFromTpNumber(nonExistingTpNr);
     }
 
+    @Test
+    public void tpLeverandoerFromTpNumber_ReturnsSPK_When_TpNrIs3010() {
+        String tpnr = "3010";
+        TpLeverandoer tpLeverandoer = TpOrdning.tpLeverandoerFromTpNumber(tpnr);
+        assertEquals(TpLeverandoer.SPK, tpLeverandoer);
+    }
+
+    @Test(expected = NoTpOrdningFound.class)
+    public void tpLeverandoerFromTpNumber_ThrowsNoTpOrdningFound_Given_NonExistingTssNr() {
+        String nonExistingTpnr = "99292139";
+        TpLeverandoer tpLeverandoer = TpOrdning.tpLeverandoerFromTpNumber(nonExistingTpnr);
+    }
 }
