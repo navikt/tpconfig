@@ -12,3 +12,8 @@ resources:
     memory: 256Mi
 prometheus:
   enabled: true
+fasitResources:
+  exposed:
+  - alias: tpconfig.serviceaccount
+    resourceType: restservice
+    path: /serviceaccount
