@@ -3,30 +3,28 @@ package no.nav.tpconfig.server;
 import io.undertow.Undertow;
 import io.undertow.server.RoutingHandler;
 import io.undertow.util.StatusCodes;
+import no.nav.tpconfig.domain.TpConfig;
 
-public class ConfigServer {
+public class Server {
 
     private final String IS_ALIVE_URL_PATH = "isAlive";
     private final String IS_READY_URL_PATH = "isReady";
-    private final String TP_NR_FOR_LEVERANDOER_PATH = "serviceaccount/{tpnr}";
+    private final String SERVICE_ACCOUNT_PATH = "serviceaccount/{tpnr}";
 
     private Undertow server;
-    private String hostName;
-    private int port;
 
-    public ConfigServer(String hostName, int port) {
-        this.hostName = hostName;
-        this.port = port;
-    }
+    public Server(String hostName, int port, ServiceAccount serviceAccount) {
 
-    public void run() {
         this.server = Undertow.builder()
                 .addHttpListener(port, hostName)
                 .setHandler(new RoutingHandler()
                         .get(IS_ALIVE_URL_PATH, NaisReadiness.status(StatusCodes.OK))
                         .get(IS_READY_URL_PATH, NaisReadiness.status(StatusCodes.OK))
-                        .get(TP_NR_FOR_LEVERANDOER_PATH, TpNumber::serviceAccount))
+                        .get(SERVICE_ACCOUNT_PATH, serviceAccount::tpNrToServiceAccount))
                 .build();
+    }
+
+    public void run() {
         server.start();
     }
 
