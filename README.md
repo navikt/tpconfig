@@ -10,3 +10,5 @@ Output: "srvElsam_SPK", status 200
 $ curl -X GET -k https://tpconfig.nais.adeo.no/serviceaccount/41604
 Output: "No serviceaccount found for TP-nr: 41604", status 404
 ```
+
+For questions contact Marius Eriksen (Marius.Eriksen@nav.no). Also available on NAV's Slack.
