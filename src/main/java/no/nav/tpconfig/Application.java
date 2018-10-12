@@ -6,6 +6,7 @@ import no.nav.tpconfig.server.ServiceAccount;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.ServletException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -29,6 +30,9 @@ class Application {
             server.run();
         } catch(UnknownHostException e) {
             LOG.error("Could not resolve host.", e);
+            System.exit(1);
+        } catch (ServletException e) {
+            LOG.error("Could not start metrics servlet.", e);
             System.exit(1);
         }
     }

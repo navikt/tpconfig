@@ -2,13 +2,12 @@ package no.nav.tpconfig.server;
 
 import io.undertow.util.StatusCodes;
 import no.nav.tpconfig.domain.TestTpConfig;
-import no.nav.tpconfig.domain.TpConfig;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+
+import javax.servlet.ServletException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,6 +18,7 @@ public class ServerIT {
     private static final String SERVICE_ACCOUNT_ENDPOINT_URL = "http://localhost:8080/serviceaccount/";
     private static final String IS_READY_ENDPOINT_URL = "http://localhost:8080/isAlive";
     private static final String IS_ALIVE_ENDPOINT_URL = "http://localhost:8080/isReady";
+    private static final String METRICS_ENDPOINT_URL = "http://localhost:8080/metrics";
     private static final String TP_NUMBER_FOR_SPK = "3010";
     private static final String SERVICEACCOUNT_FOR_SPK = "srvElsam_SPK";
     private static final String NON_EXISTING_TP_NUMBER = "999999";
@@ -28,8 +28,8 @@ public class ServerIT {
     private static Server server;
     private static OkHttpClient client;
 
-    @BeforeClass
-    public static void setUp() {
+    @Before
+    public void setUp() throws ServletException {
         TestTpConfig testConfig = new TestTpConfig();
         testConfig.addTestConfig(TP_NUMBER_FOR_SPK, SERVICEACCOUNT_FOR_SPK);
         server = new Server(LOCALHOST, PORT, new ServiceAccount(testConfig));
@@ -37,8 +37,8 @@ public class ServerIT {
         client = new OkHttpClient();
     }
 
-    @AfterClass
-    public static void tearDown() {
+    @After
+    public void tearDown() {
         server.stop();
     }
 
@@ -79,6 +79,14 @@ public class ServerIT {
     @Test
     public void isReady_endpoint_returns_OK() throws Exception {
         Request request = new Request.Builder().url(IS_READY_ENDPOINT_URL).build();
+        Response response = client.newCall(request).execute();
+
+        assertEquals(StatusCodes.OK, response.code());
+    }
+
+    @Test
+    public void metrics_endpoint_returns_OK() throws Exception {
+        Request request = new Request.Builder().url(METRICS_ENDPOINT_URL).build();
         Response response = client.newCall(request).execute();
 
         assertEquals(StatusCodes.OK, response.code());
