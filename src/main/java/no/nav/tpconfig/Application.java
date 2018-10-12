@@ -29,6 +29,7 @@ class Application {
             server.run();
         } catch(UnknownHostException e) {
             LOG.error("Could not resolve host.", e);
+            System.exit(1);
         }
     }
 }
