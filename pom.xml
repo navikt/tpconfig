@@ -27,6 +27,7 @@
     </properties>
 
     <dependencies>
+        <!-- Server -->
         <dependency>
             <groupId>io.undertow</groupId>
             <artifactId>undertow-core</artifactId>
@@ -43,6 +44,7 @@
             <version>2.0.13.Final</version>
         </dependency>
 
+        <!-- Logging -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
@@ -59,12 +61,24 @@
             <version>2.9.5</version>
         </dependency>
 
+        <!-- Metrics -->
         <dependency>
             <groupId>io.prometheus</groupId>
-            <artifactId>simpleclient</artifactId>
-            <version>0.5.0</version>
+            <artifactId>simpleclient_hotspot</artifactId>
+            <version>0.0.26</version>
+        </dependency>
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient_servlet</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.prometheus.jmx</groupId>
+            <artifactId>collector</artifactId>
+            <version>0.3.1</version>
         </dependency>
 
+        <!-- Test -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

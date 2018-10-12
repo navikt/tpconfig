@@ -11,15 +11,15 @@ import org.slf4j.LoggerFactory;
 public class ServiceAccount {
 
     private static final Counter sumRequestsRecieved = Counter.build()
-            .name("sum_requests_recieved")
+            .name("tp_config_serviceaccount_endpoint_requests_recieved")
             .help("Antall requests mottatt til serviceaccount endepunkt").register();
 
     private static final Counter serviceAccountFound = Counter.build()
-            .name("sum_service_accounts_found")
+            .name("tpconfig_service_accounts_found")
             .help("Antall serviceaccounts funnet basert på tpnr i request").register();
 
     private static final Counter serviceAccountNotFound = Counter.build()
-            .name("sum_service_accounts_not_found")
+            .name("tpconfig_serviceaccounts_not_found")
             .help("Antall serviceaccounts ikke funnet basert på tpnr i request").register();
 
     private static final Logger LOG = LoggerFactory.getLogger(ServiceAccount.class);
@@ -38,14 +38,14 @@ public class ServiceAccount {
         try {
             String tpnr = urlParamValue(exchange, TPNR_URL_PARAMETER_NAME);
             String serviceAccount = tpConfig.serviceaccount(tpnr);
+            serviceAccountFound.inc();
             exchange.setStatusCode(StatusCodes.OK);
             exchange.getResponseSender().send(serviceAccount);
-            serviceAccountFound.inc();
         } catch (NoTpOrdningFound e) {
             LOG.warn(e.getMessage());
+            serviceAccountNotFound.inc();
             exchange.setStatusCode(StatusCodes.NOT_FOUND);
             exchange.getResponseSender().send(e.getMessage());
-            serviceAccountNotFound.inc();
         }
     }
 
