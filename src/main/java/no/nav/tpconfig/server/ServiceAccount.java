@@ -1,14 +1,26 @@
 package no.nav.tpconfig.server;
 
+import io.prometheus.client.Counter;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.StatusCodes;
-import no.nav.tpconfig.domain.IllegalTpConfig;
 import no.nav.tpconfig.domain.NoTpOrdningFound;
 import no.nav.tpconfig.domain.TpConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ServiceAccount {
+
+    private static final Counter sumRequestsRecieved = Counter.build()
+            .name("total_amount_of_requests_to_serviceaccount_endpoint")
+            .help("Antall requests mottatt til serviceaccount endepunkt").register();
+
+    private static final Counter serviceAccountFound = Counter.build()
+            .name("sum_service_accounts_found")
+            .help("Antall serviceaccounts funnet basert på tpnr i request").register();
+
+    private static final Counter serviceAccountNotFound = Counter.build()
+            .name("total_amount_of_requests_served")
+            .help("Antall serviceaccounts ikke funnet basert på tpnr i request").register();
 
     private static final Logger LOG = LoggerFactory.getLogger(ServiceAccount.class);
     private static final String TPNR_URL_PARAMETER_NAME = "tpnr";
@@ -20,6 +32,7 @@ public class ServiceAccount {
 
     void tpNrToServiceAccount(HttpServerExchange exchange) {
 
+        sumRequestsRecieved.inc();
         LOG.info("Request url: " + exchange.getRequestURL());
 
         try {
@@ -27,10 +40,12 @@ public class ServiceAccount {
             String serviceAccount = tpConfig.serviceaccount(tpnr);
             exchange.setStatusCode(StatusCodes.OK);
             exchange.getResponseSender().send(serviceAccount);
+            serviceAccountFound.inc();
         } catch (NoTpOrdningFound e) {
             LOG.warn(e.getMessage());
             exchange.setStatusCode(StatusCodes.NOT_FOUND);
             exchange.getResponseSender().send(e.getMessage());
+            serviceAccountNotFound.inc();
         }
     }
 
