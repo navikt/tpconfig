@@ -3,7 +3,6 @@ package no.nav.tpconfig.server;
 import io.undertow.Undertow;
 import io.undertow.server.RoutingHandler;
 import io.undertow.util.StatusCodes;
-import no.nav.tpconfig.domain.TpConfig;
 
 public class Server {
 
@@ -28,7 +27,7 @@ public class Server {
         server.start();
     }
 
-    public void stop() {
+    void stop() {
         this.server.stop();
     }
 }
