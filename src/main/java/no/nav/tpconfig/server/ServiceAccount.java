@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 public class ServiceAccount {
 
     private static final Counter sumRequestsRecieved = Counter.build()
-            .name("total_amount_of_requests_to_serviceaccount_endpoint")
+            .name("sum_requests_recieved")
             .help("Antall requests mottatt til serviceaccount endepunkt").register();
 
     private static final Counter serviceAccountFound = Counter.build()
@@ -19,7 +19,7 @@ public class ServiceAccount {
             .help("Antall serviceaccounts funnet basert på tpnr i request").register();
 
     private static final Counter serviceAccountNotFound = Counter.build()
-            .name("total_amount_of_requests_served")
+            .name("sum_service_accounts_not_found")
             .help("Antall serviceaccounts ikke funnet basert på tpnr i request").register();
 
     private static final Logger LOG = LoggerFactory.getLogger(ServiceAccount.class);
