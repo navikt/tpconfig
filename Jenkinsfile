@@ -43,7 +43,7 @@ node {
             }
         }
 
-        stage("deploy") {
+        stage("deploy preprod") {
             build([
                     job       : 'nais-deploy-pipeline',
                     wait      : false,
@@ -53,6 +53,20 @@ node {
                             string(name: 'VERSION', value: version),
                             string(name: 'COMMIT_HASH', value: commitHash),
                             string(name: 'DEPLOY_ENV', value: 'q0')
+                    ]
+            ])
+        }
+
+        stage("deploy prod") {
+            build([
+                    job       : 'nais-deploy-pipeline',
+                    wait      : false,
+                    parameters: [
+                            string(name: 'APP', value: "pip-tpleverandoer"),
+                            string(name: 'REPO', value: "navikt/pip-tpleverandoer"),
+                            string(name: 'VERSION', value: version),
+                            string(name: 'COMMIT_HASH', value: commitHash),
+                            string(name: 'DEPLOY_ENV', value: 'p')
                     ]
             ])
         }
