@@ -62,8 +62,8 @@ node {
                     job       : 'nais-deploy-pipeline',
                     wait      : false,
                     parameters: [
-                            string(name: 'APP', value: "pip-tpleverandoer"),
-                            string(name: 'REPO', value: "navikt/pip-tpleverandoer"),
+                            string(name: 'APP', value: "tpconfig"),
+                            string(name: 'REPO', value: "navikt/tpconfig"),
                             string(name: 'VERSION', value: version),
                             string(name: 'COMMIT_HASH', value: commitHash),
                             string(name: 'DEPLOY_ENV', value: 'p')
