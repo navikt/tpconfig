@@ -46,7 +46,7 @@ node {
         stage("deploy preprod") {
             build([
                     job       : 'nais-deploy-pipeline',
-                    wait      : false,
+                    propagate : true,
                     parameters: [
                             string(name: 'APP', value: "tpconfig"),
                             string(name: 'REPO', value: "navikt/tpconfig"),
