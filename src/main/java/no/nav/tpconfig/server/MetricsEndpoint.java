@@ -5,7 +5,6 @@ import io.undertow.Handlers;
 import io.undertow.server.handlers.PathHandler;
 import io.undertow.servlet.Servlets;
 import io.undertow.servlet.api.DeploymentInfo;
-import io.undertow.servlet.api.DeploymentManager;
 
 import javax.servlet.ServletException;
 
@@ -20,7 +19,7 @@ class MetricsEndpoint {
                 .setContextPath(rootUrlPath)
                 .addServlets(Servlets.servlet(MetricsServlet.class).addMapping(metricsUrlPath));
 
-        DeploymentManager manager = Servlets.defaultContainer().addDeployment(servletBuilder);
+        var manager = Servlets.defaultContainer().addDeployment(servletBuilder);
         manager.deploy();
         return Handlers.path().addPrefixPath(rootUrlPath, manager.start());
     }

@@ -84,7 +84,7 @@ public class TpConfig {
     }
 
     public String serviceaccount(String tpnr) {
-        String serviceaccount = tpconfig.get(tpnr);
+        var serviceaccount = tpconfig.get(tpnr);
         if(Objects.isNull(serviceaccount)) {
             throw new NoTpOrdningFound("No serviceaccount found for TP-nr: " + tpnr);
         } else {

@@ -17,17 +17,17 @@ class Application {
     private static final int PORT = 8080;
 
     public static void main(String[] args) {
-        Application app = new Application();
+        var app = new Application();
         app.run();
     }
 
     void run() {
         try {
             initializeJvmMetrics();
-            final String hostName = InetAddress.getLocalHost().getHostName();
-            final TpConfig tpConfig = new TpConfig();
-            final ServiceAccount serviceAccount = new ServiceAccount(tpConfig);
-            Server server = new Server(hostName, PORT, serviceAccount);
+            final var hostName = InetAddress.getLocalHost().getHostName();
+            final var tpConfig = new TpConfig();
+            final var serviceAccount = new ServiceAccount(tpConfig);
+            var server = new Server(hostName, PORT, serviceAccount);
             LOG.info(String.format("Starting server on host: %s:%s", hostName, PORT));
             server.run();
         } catch(UnknownHostException e) {

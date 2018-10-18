@@ -18,7 +18,7 @@ public class Server {
 
     public Server(String hostName, int port, ServiceAccount serviceAccount) throws ServletException {
 
-        MetricsEndpoint metricsEndpoint = new MetricsEndpoint();
+        var metricsEndpoint = new MetricsEndpoint();
 
         this.server = Undertow.builder()
                 .addHttpListener(port, hostName)

@@ -36,8 +36,8 @@ public class ServiceAccount {
         LOG.info("Request url: " + exchange.getRequestURL());
 
         try {
-            String tpnr = urlParamValue(exchange, TPNR_URL_PARAMETER_NAME);
-            String serviceAccount = tpConfig.serviceaccount(tpnr);
+            var tpnr = urlParamValue(exchange, TPNR_URL_PARAMETER_NAME);
+            var serviceAccount = tpConfig.serviceaccount(tpnr);
             serviceAccountFound.inc();
             exchange.setStatusCode(StatusCodes.OK);
             exchange.getResponseSender().send(serviceAccount);
