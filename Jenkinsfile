@@ -22,12 +22,7 @@ node {
         }
 
         stage("build") {
-            tools {
-                jdk "openjdk11"
-            }
-            steps {
-                sh "make"
-            }
+            sh "make"
         }
 
         stage("release") {
