@@ -10,8 +10,13 @@ public class TpConfigTest {
     private static TpConfig tpConfig;
     private final static String NON_EXISTING_TPNR = "90000000";
     private final static String TPNR_FOR_SPK = "3010";
+    private final static String NON_EXISTING_TSSNR = "00";
+    private final static String TSSNR_FOR_SPK = "80000470761";
     private final static String FICTIONAL_SERVICE_ACCOUNT = "srvElsam_Test";
+    private final static String FICTIONAL_TPLEVERANDOERNAME = "TEST";
     private final static String SPK_SERVICE_ACCOUNT = "srvElsam_SPK";
+    private final static String SPK_NAME = "SPK";
+    private final static TPLeverandoerData FICTIONALTPLEVERANDOERDATA = new TPLeverandoerData(FICTIONAL_SERVICE_ACCOUNT, FICTIONAL_TPLEVERANDOERNAME);
 
     @Before
     public void setUp() {
@@ -30,27 +35,42 @@ public class TpConfigTest {
 
     @Test
     public void addConfig_adds_tpnr_and_serviceaccount_when_key_does_not_exist_in_tpconfig() {
-        tpConfig.addConfig(NON_EXISTING_TPNR, FICTIONAL_SERVICE_ACCOUNT);
+        tpConfig.addConfig(NON_EXISTING_TPNR, FICTIONALTPLEVERANDOERDATA, NON_EXISTING_TSSNR);
         assertEquals(FICTIONAL_SERVICE_ACCOUNT, tpConfig.serviceaccount(NON_EXISTING_TPNR));
     }
 
     @Test(expected = IllegalTpConfig.class)
     public void addConfig_throws_IllegalTpConfig_when_key_already_exists_in_map() {
-        tpConfig.addConfig(TPNR_FOR_SPK, FICTIONAL_SERVICE_ACCOUNT);
+        tpConfig.addConfig(TPNR_FOR_SPK, FICTIONALTPLEVERANDOERDATA, TSSNR_FOR_SPK);
     }
 
     @Test(expected = IllegalTpConfig.class)
     public void addConfig_throws_IllegalTpConfig_when_tpnr_is_null() {
-        tpConfig.addConfig(null, FICTIONAL_SERVICE_ACCOUNT);
+        tpConfig.addConfig(null, FICTIONALTPLEVERANDOERDATA, NON_EXISTING_TSSNR);
     }
 
     @Test(expected = IllegalTpConfig.class)
     public void addConfig_throws_IllegalTpConfig_when_serviceaccount_is_null() {
-        tpConfig.addConfig(NON_EXISTING_TPNR, null);
+        tpConfig.addConfig(NON_EXISTING_TPNR, new TPLeverandoerData(null, FICTIONAL_TPLEVERANDOERNAME), NON_EXISTING_TSSNR);
     }
 
     @Test(expected = IllegalTpConfig.class)
-    public void addConfig_throws_IllegalTpConfig_when_tpnr_and_serviceaccount_is_null() {
-        tpConfig.addConfig(null, null);
+    public void addConfig_throws_IllegalTpConfig_when_tpleverandoername_is_null() {
+        tpConfig.addConfig(NON_EXISTING_TPNR, new TPLeverandoerData(FICTIONAL_SERVICE_ACCOUNT, null), NON_EXISTING_TSSNR);
+    }
+
+    @Test(expected = IllegalTpConfig.class)
+    public void addConfig_throws_IllegalTpConfig_when_tplevernandoerdata_is_null() {
+        tpConfig.addConfig(NON_EXISTING_TPNR, null, NON_EXISTING_TSSNR);
+    }
+
+    @Test(expected = IllegalTpConfig.class)
+    public void addConfig_throws_IllegalTpConfig_when_tssnumber_is_null() {
+        tpConfig.addConfig(NON_EXISTING_TPNR, FICTIONALTPLEVERANDOERDATA, null);
+    }
+
+    @Test(expected = IllegalTpConfig.class)
+    public void addConfig_throws_IllegalTpConfig_when_tpnr_and_serviceaccount_and_tssnumber_is_null() {
+        tpConfig.addConfig(null, null, null);
     }
 }

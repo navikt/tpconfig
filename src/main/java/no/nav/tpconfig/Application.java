@@ -3,6 +3,7 @@ package no.nav.tpconfig;
 import no.nav.tpconfig.domain.TpConfig;
 import no.nav.tpconfig.server.Server;
 import no.nav.tpconfig.server.ServiceAccount;
+import no.nav.tpconfig.server.TPLeverandoerController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import io.prometheus.client.hotspot.DefaultExports;
@@ -27,7 +28,8 @@ class Application {
             final var hostName = InetAddress.getLocalHost().getHostName();
             final var tpConfig = new TpConfig();
             final var serviceAccount = new ServiceAccount(tpConfig);
-            var server = new Server(hostName, PORT, serviceAccount);
+            final var tpLeverandoerController = new TPLeverandoerController(tpConfig);
+            var server = new Server(hostName, PORT, serviceAccount, tpLeverandoerController);
             LOG.info(String.format("Starting server on host: %s:%s", hostName, PORT));
             server.run();
         } catch(UnknownHostException e) {
