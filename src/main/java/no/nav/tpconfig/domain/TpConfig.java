@@ -86,6 +86,8 @@ public class TpConfig {
         addConfig("4096", storebrand, "80000619165");
         addConfig("4098", storebrand, "80000515880");
         addConfig("4150", storebrand, "80000470820");
+        addConfig("4157", storebrand, "80000783960");
+        addConfig("4158", storebrand, "80000783962");
     }
 
     void addConfig(String tpNumber, TPLeverandoerData tpLeverandoerData, String tssNumber){
