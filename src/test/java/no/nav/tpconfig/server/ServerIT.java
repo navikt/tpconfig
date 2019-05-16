@@ -11,12 +11,13 @@ import javax.servlet.ServletException;
 
 import java.io.IOException;
 
+import static no.nav.tpconfig.server.EndpointFactory.*;
 import static org.junit.Assert.assertEquals;
 
 public class ServerIT {
 
-    private static final String LOCALHOST = "localhost";
     private static final int PORT = 8080;
+    private static final String LOCALHOST = "localhost";
     private static final String SERVICE_ACCOUNT_ENDPOINT_URL = "http://localhost:8080/serviceaccount/";
     private static final String TPLEVERANDOER_BY_TPNR_ENDPOINT_URL = "http://localhost:8080/tpleverandoer/";
     private static final String TPLEVERANDOER_BY_TSSNR_ENDPOINT_URL = "http://localhost:8080/tpleverandoer/tssnr/";
@@ -42,9 +43,9 @@ public class ServerIT {
         TestTpConfig testConfig = new TestTpConfig();
         testConfig.addTestConfig(TP_NUMBER_FOR_SPK, SERVICEACCOUNT_FOR_SPK, TPLEVERANDOER_FOR_SPK, TSS_NUMBER_FOR_SPK);
         server = new Server(LOCALHOST, PORT,
-                EndpointFactory.createTpNrToTPLeverandoerEndpoint(testConfig),
-                EndpointFactory.createTssNrToTPLeverandoerEndpoint(testConfig),
-                EndpointFactory.createServiceAccountEndpoint(testConfig));
+                createTpNrToTPLeverandoerEndpoint(testConfig),
+                createTssNrToTPLeverandoerEndpoint(testConfig),
+                createServiceAccountEndpoint(testConfig));
         server.run();
         client = new OkHttpClient();
     }

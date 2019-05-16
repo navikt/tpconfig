@@ -15,7 +15,6 @@ public class TpConfigTest {
     private final static String FICTIONAL_SERVICE_ACCOUNT = "srvElsam_Test";
     private final static String FICTIONAL_TPLEVERANDOERNAME = "TEST";
     private final static String SPK_SERVICE_ACCOUNT = "srvElsam_SPK";
-    private final static String SPK_NAME = "SPK";
     private final static TPLeverandoerData FICTIONALTPLEVERANDOERDATA = new TPLeverandoerData(FICTIONAL_SERVICE_ACCOUNT, FICTIONAL_TPLEVERANDOERNAME);
 
     @Before
