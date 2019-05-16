@@ -41,7 +41,10 @@ public class ServerIT {
     public void setUp() throws ServletException {
         TestTpConfig testConfig = new TestTpConfig();
         testConfig.addTestConfig(TP_NUMBER_FOR_SPK, SERVICEACCOUNT_FOR_SPK, TPLEVERANDOER_FOR_SPK, TSS_NUMBER_FOR_SPK);
-        server = new Server(LOCALHOST, PORT, new ServiceAccount(testConfig), new TPLeverandoerController(testConfig));
+        server = new Server(LOCALHOST, PORT,
+                EndpointFactory.createTpNrToTPLeverandoerEndpoint(testConfig),
+                EndpointFactory.createTssNrToTPLeverandoerEndpoint(testConfig),
+                EndpointFactory.createServiceAccountEndpoint(testConfig));
         server.run();
         client = new OkHttpClient();
     }
@@ -65,8 +68,8 @@ public class ServerIT {
         Request request = new Request.Builder().url(SERVICE_ACCOUNT_ENDPOINT_URL + NON_EXISTING_TP_NUMBER).build();
         Response response = client.newCall(request).execute();
 
-        assertEquals(NO_SERVICEACCOUNT_ORDNING_FOUND_FOR_TP_NR + NON_EXISTING_TP_NUMBER, response.body().string());
         assertEquals(StatusCodes.NOT_FOUND, response.code());
+        assertEquals(NO_SERVICEACCOUNT_ORDNING_FOUND_FOR_TP_NR + NON_EXISTING_TP_NUMBER, response.body().string());
     }
 
     @Test
