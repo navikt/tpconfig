@@ -32,7 +32,7 @@ public class TpConfig {
         final TPLeverandoerData gabler = new TPLeverandoerData(GABLER_SERVICEACCOUNT, GABLER);
         final TPLeverandoerData pts = new TPLeverandoerData(PTS_SERVICEACCOUNT, PTS);
         final TPLeverandoerData opf = new TPLeverandoerData(OPF_SERVICEACCOUNT, OPF);
-        final TPLeverandoerData gff = new TPLeverandoerData(GFF_SERVICEACCOUNT, GFF_SERVICEACCOUNT);
+        final TPLeverandoerData gff = new TPLeverandoerData(GFF_SERVICEACCOUNT, GFF);
 
         addConfig("3010", spk, "80000470761");
 
