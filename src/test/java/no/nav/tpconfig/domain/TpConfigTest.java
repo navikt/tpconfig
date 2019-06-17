@@ -38,6 +38,11 @@ public class TpConfigTest {
         assertEquals(FICTIONAL_SERVICE_ACCOUNT, tpConfig.serviceaccount(NON_EXISTING_TPNR));
     }
 
+    @Test
+    public void hent_tssnr_by_tpnr() {
+        assertEquals(TSSNR_FOR_SPK, tpConfig.tssNummerByTpNr(TPNR_FOR_SPK));
+    }
+
     @Test(expected = IllegalTpConfig.class)
     public void addConfig_throws_IllegalTpConfig_when_key_already_exists_in_map() {
         tpConfig.addConfig(TPNR_FOR_SPK, FICTIONALTPLEVERANDOERDATA, TSSNR_FOR_SPK);

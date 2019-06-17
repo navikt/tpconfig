@@ -140,4 +140,15 @@ public class TpConfig {
             return name;
         }
     }
+
+    public String tssNummerByTpNr(String tpnr) {
+        var tpData = tpconfig.get(tpnr);
+        var tpTssNr = tpData==null?null:tpData.getTssNumber();
+
+        if(Objects.isNull(tpTssNr)) {
+            throw new NoTpOrdningFound("No TSS-Number found for TP-nr: " + tpnr);
+        } else {
+            return tpTssNr;
+        }
+    }
 }

@@ -21,6 +21,7 @@ public class ServerIT {
     private static final String SERVICE_ACCOUNT_ENDPOINT_URL = "http://localhost:8080/serviceaccount/";
     private static final String TPLEVERANDOER_BY_TPNR_ENDPOINT_URL = "http://localhost:8080/tpleverandoer/";
     private static final String TPLEVERANDOER_BY_TSSNR_ENDPOINT_URL = "http://localhost:8080/tpleverandoer/tssnr/";
+    private static final String TSSNR_BY_TPNR_PATH_ENDPOINT_URL = "http://localhost:8080/tssnr/";
     private static final String IS_READY_ENDPOINT_URL = "http://localhost:8080/isAlive";
     private static final String IS_ALIVE_ENDPOINT_URL = "http://localhost:8080/isReady";
     private static final String METRICS_ENDPOINT_URL = "http://localhost:8080/metrics";
@@ -33,6 +34,7 @@ public class ServerIT {
     private static final String NO_SERVICEACCOUNT_ORDNING_FOUND_FOR_TP_NR = "No serviceaccount found for TP-nr: ";
     private static final String NO_TP_LEVERANDOER_FOUND_FOR_TP_NR = "No TP-account found for TP-nr: ";
     private static final String NO_TP_LEVERANDOER_FOUND_FOR_TSS_NR = "No TP-account found for TSS-nr: ";
+    private static final String NO_TSS_NR_FOUND_FOR_TP_NR = "No TSS-Number found for TP-nr: ";
     private static final String NON_EXISTING_PATH = "http://localhost:8080/pathdoesnotexist/";
 
     private static Server server;
@@ -45,7 +47,8 @@ public class ServerIT {
         server = new Server(LOCALHOST, PORT,
                 createTpNrToTPLeverandoerEndpoint(testConfig),
                 createTssNrToTPLeverandoerEndpoint(testConfig),
-                createServiceAccountEndpoint(testConfig));
+                createServiceAccountEndpoint(testConfig),
+                createTssNrToTpNrEndpoint(testConfig));
         server.run();
         client = new OkHttpClient();
     }
@@ -97,6 +100,24 @@ public class ServerIT {
         Response response = client.newCall(request).execute();
 
         assertEquals(TPLEVERANDOER_FOR_SPK, response.body().string());
+        assertEquals(StatusCodes.OK, response.code());
+    }
+
+    @Test  //SAM-64 negative
+    public void tpNumberToTssNumberByTpNumber_returns_error_message_when_non_existing_tpnr_is_provided() throws IOException {
+        Request request = new Request.Builder().url(TSSNR_BY_TPNR_PATH_ENDPOINT_URL + NON_EXISTING_TP_NUMBER).build();
+        Response response = client.newCall(request).execute();
+
+        assertEquals(NO_TSS_NR_FOUND_FOR_TP_NR + NON_EXISTING_TP_NUMBER, response.body().string());
+        assertEquals(StatusCodes.NOT_FOUND, response.code());
+    }
+
+    @Test //SAM-64 positive
+    public void tpNumberToTssNumberByTpNumber() throws IOException {
+        Request request = new Request.Builder().url(TSSNR_BY_TPNR_PATH_ENDPOINT_URL + TP_NUMBER_FOR_SPK).build();
+        Response response = client.newCall(request).execute();
+
+        assertEquals(TSS_NUMBER_FOR_SPK, response.body().string());
         assertEquals(StatusCodes.OK, response.code());
     }
 

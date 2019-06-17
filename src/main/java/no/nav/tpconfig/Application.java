@@ -30,7 +30,8 @@ class Application {
             var server = new Server(hostName, PORT,
                     createServiceAccountEndpoint(tpConfig),
                     createTpNrToTPLeverandoerEndpoint(tpConfig),
-                    createTssNrToTPLeverandoerEndpoint(tpConfig));
+                    createTssNrToTPLeverandoerEndpoint(tpConfig),
+                    createTssNrToTpNrEndpoint(tpConfig));
             LOG.info(String.format("Starting server on host: %s:%s", hostName, PORT));
             server.run();
         } catch (

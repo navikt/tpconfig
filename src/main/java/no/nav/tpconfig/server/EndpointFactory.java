@@ -11,7 +11,7 @@ public class EndpointFactory {
     private static final String SERVICE_ACCOUNT_PATH = String.format("serviceaccount/{%s}", TPNR_URL_PARAMETER_NAME);
     private static final String LEVERANDOR_BY_TPNR_PATH = String.format("tpleverandoer/{%s}", TPNR_URL_PARAMETER_NAME);
     private static final String LEVERANDOR_BY_TSSNR_PATH = String.format("tpleverandoer/tssnr/{%s}", TSSNR_URL_PARAMETER_NAME);
-
+    private static final String TSSNR_BY_TPNR_PATH = String.format("tssnr/{%s}", TPNR_URL_PARAMETER_NAME);
 
     private final static Metrics METRICS_FOR_SERVICEACCOUNT_ENDPOINT = metricFor("tp_config_serviceaccount")
             .withFoundCounter("Antall serviceaccounts funnet basert på tpnr i request")
@@ -27,6 +27,11 @@ public class EndpointFactory {
             .withFoundCounter("Antall tpleverandoerer funnet basert på tssnr i request")
             .withNotFoundCounter("Antall tpleverandoerer ikke funnet basert på tssnr i request")
             .withReceivedCounter("Antall requests mottatt til tpleverandoer for tssnr endepunkt")
+            .createMetrics();
+    private static final Metrics METRICS_FOR_TSSNR_TO_TPNR = metricFor("tp_config_tpnummer_tssnr")
+            .withFoundCounter("Antall tssnr funnet basert på tpnr i request")
+            .withNotFoundCounter("Antall tssnr ikke funnet basert på tpnr i request")
+            .withReceivedCounter("Antall requests mottatt til tssnr for tpnr endepunkt")
             .createMetrics();
 
     public static Endpoint<String> createServiceAccountEndpoint(TpConfig tpConfig){
@@ -53,6 +58,15 @@ public class EndpointFactory {
                 Utlis.urlParamExtractor(TSSNR_URL_PARAMETER_NAME),
                 tpConfig::leverandoerNameByTSSNr,
                 LEVERANDOR_BY_TSSNR_PATH
+        );
+    }
+
+    public static Endpoint<String> createTssNrToTpNrEndpoint(TpConfig tpConfig){
+        return new Endpoint<>(
+                METRICS_FOR_TSSNR_TO_TPNR,
+                Utlis.urlParamExtractor(TPNR_URL_PARAMETER_NAME),
+                tpConfig::tssNummerByTpNr,
+                TSSNR_BY_TPNR_PATH
         );
     }
 
