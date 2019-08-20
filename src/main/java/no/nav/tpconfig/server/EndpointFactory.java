@@ -1,6 +1,7 @@
 package no.nav.tpconfig.server;
 
 import no.nav.tpconfig.domain.TpConfig;
+
 import static no.nav.tpconfig.server.MetricsBuilder.metricFor;
 
 
@@ -29,7 +30,7 @@ public class EndpointFactory {
             .withReceivedCounter("Antall requests mottatt til tpleverandoer for tssnr endepunkt")
             .createMetrics();
 
-    public static Endpoint<String> createServiceAccountEndpoint(TpConfig tpConfig){
+    public static Endpoint<String> createServiceAccountEndpoint(TpConfig tpConfig) {
         return new Endpoint<>(
                 METRICS_FOR_SERVICEACCOUNT_ENDPOINT,
                 Utlis.urlParamExtractor(TPNR_URL_PARAMETER_NAME),
@@ -38,7 +39,7 @@ public class EndpointFactory {
         );
     }
 
-    public static Endpoint<String> createTpNrToTPLeverandoerEndpoint(TpConfig tpConfig){
+    public static Endpoint<String> createTpNrToTPLeverandoerEndpoint(TpConfig tpConfig) {
         return new Endpoint<>(
                 METRICS_FOR_TPNR_TO_TPLEVERANDOER,
                 Utlis.urlParamExtractor(TPNR_URL_PARAMETER_NAME),
@@ -47,7 +48,7 @@ public class EndpointFactory {
         );
     }
 
-    public static Endpoint<String> createTssNrToTPLeverandoerEndpoint(TpConfig tpConfig){
+    public static Endpoint<String> createTssNrToTPLeverandoerEndpoint(TpConfig tpConfig) {
         return new Endpoint<>(
                 METRICS_FOR_TSSNR_TO_TPLEVERANDOER,
                 Utlis.urlParamExtractor(TSSNR_URL_PARAMETER_NAME),

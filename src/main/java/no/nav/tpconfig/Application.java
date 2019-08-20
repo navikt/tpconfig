@@ -22,7 +22,7 @@ class Application {
         app.run();
     }
 
-    void run() {
+    private void run() {
         try {
             initializeJvmMetrics();
             final var hostName = InetAddress.getLocalHost().getHostName();

@@ -9,7 +9,7 @@ final class TPLeverandoerData {
         this.tPLeverandoerName = tPLeverandoerName;
     }
 
-    String gettPLeverandoerName() {
+    String getTpLeverandoerName() {
         return tPLeverandoerName;
     }
 

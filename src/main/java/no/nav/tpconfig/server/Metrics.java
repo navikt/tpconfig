@@ -11,8 +11,7 @@ public class Metrics {
     private final Runnable notFoundCounter;
     private final Runnable receivedCounter;
 
-    private static final Runnable COUNTER_THAT_DOES_NOTHING = ()->{};
-
+    private static final Runnable COUNTER_THAT_DOES_NOTHING = () -> { };
 
     public Metrics(String metricFor, String foundHelp, String notFoundHelp, String receivedHelp) {
         this.foundCounter = createCounter(metricFor + "_found", foundHelp);
@@ -20,17 +19,13 @@ public class Metrics {
         this.receivedCounter = createCounter(metricFor + "_endpoint_requests_recieved", receivedHelp);
     }
 
-    void requestReceived(){
-        receivedCounter.run();
-    }
-    void found(){
-        foundCounter.run();
-    }
-    void notFound(){
-        notFoundCounter.run();
-    }
+    void requestReceived() { receivedCounter.run(); }
 
-    private Runnable createCounter(String name, String help){
+    void found() { foundCounter.run(); }
+
+    void notFound() { notFoundCounter.run(); }
+
+    private Runnable createCounter(String name, String help) {
         return Objects.isNull(help) ?
                 COUNTER_THAT_DOES_NOTHING
                 : Counter.build()
@@ -39,5 +34,4 @@ public class Metrics {
                 .register()
                 ::inc;
     }
-
 }

@@ -18,7 +18,7 @@ public class Endpoint<E> implements HttpHandler {
     private Function<E, String> createResultFromInput;
     private String path;
 
-    public Endpoint(Metrics metrics, Function<HttpServerExchange, E> extractInputFromExcange, Function<E, String> createResultFromInput, String path) {
+    Endpoint(Metrics metrics, Function<HttpServerExchange, E> extractInputFromExcange, Function<E, String> createResultFromInput, String path) {
         this.metrics = metrics;
         this.extractInputFromExcange = extractInputFromExcange;
         this.createResultFromInput = createResultFromInput;

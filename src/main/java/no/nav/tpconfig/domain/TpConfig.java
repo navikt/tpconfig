@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class TpConfig {
 
-    private Map<String,TPConfigData> tpconfig = new HashMap<>();
+    private Map<String, TPConfigData> tpconfig = new HashMap<>();
 
     private static final String SPK_SERVICEACCOUNT = "srvElsam_SPK";
     private static final String KLP_SERVICEACCOUNT = "srvElsam_KLP";
@@ -90,18 +90,18 @@ public class TpConfig {
         addConfig("4158", storebrand, "80000783962");
     }
 
-    void addConfig(String tpNumber, TPLeverandoerData tpLeverandoerData, String tssNumber){
-        if(!Objects.isNull(tpconfig.get(tpNumber)))
+    void addConfig(String tpNumber, TPLeverandoerData tpLeverandoerData, String tssNumber) {
+        if (!Objects.isNull(tpconfig.get(tpNumber)))
             throw new IllegalTpConfig("TP-number " + tpNumber + " already exists");
-        if(Objects.isNull(tpNumber))
+        if (Objects.isNull(tpNumber))
             throw new IllegalTpConfig("TP-number can't be null");
-        if(Objects.isNull(tpLeverandoerData))
+        if (Objects.isNull(tpLeverandoerData))
             throw new IllegalTpConfig("TPLeverandoerdata can't be null");
-        if(Objects.isNull(tpLeverandoerData.getServiceAccount()))
+        if (Objects.isNull(tpLeverandoerData.getServiceAccount()))
             throw new IllegalTpConfig("Serviceaccount can't be null");
-        if(Objects.isNull(tpLeverandoerData.gettPLeverandoerName()))
+        if (Objects.isNull(tpLeverandoerData.getTpLeverandoerName()))
             throw new IllegalTpConfig("TP-leverandoer-name can't be null");
-        if(Objects.isNull(tssNumber))
+        if (Objects.isNull(tssNumber))
             throw new IllegalTpConfig("TSS-number can't be null");
 
         tpconfig.put(tpNumber, new TPConfigData(tpLeverandoerData, tssNumber));
@@ -109,9 +109,9 @@ public class TpConfig {
 
     public String serviceaccount(String tpnr) {
         var tpData = tpconfig.get(tpnr);
-        var tpLeverandoerData = tpData==null?null:tpData.getTpLeverandoerData();
-        var serviceaccount = tpLeverandoerData==null?null:tpLeverandoerData.getServiceAccount();
-        if(Objects.isNull(serviceaccount)) {
+        var tpLeverandoerData = tpData == null ? null : tpData.getTpLeverandoerData();
+        var serviceaccount = tpLeverandoerData == null ? null : tpLeverandoerData.getServiceAccount();
+        if (Objects.isNull(serviceaccount)) {
             throw new NoTpOrdningFound("No serviceaccount found for TP-nr: " + tpnr);
         } else {
             return serviceaccount;
@@ -120,9 +120,9 @@ public class TpConfig {
 
     public String leverandoerNameByTPNr(String tpnr) {
         var tpData = tpconfig.get(tpnr);
-        var tpLeverandoerData = tpData==null?null:tpData.getTpLeverandoerData();
-        var name = tpLeverandoerData==null?null:tpLeverandoerData.gettPLeverandoerName();
-        if(Objects.isNull(name)) {
+        var tpLeverandoerData = tpData == null ? null : tpData.getTpLeverandoerData();
+        var name = tpLeverandoerData == null ? null : tpLeverandoerData.getTpLeverandoerName();
+        if (Objects.isNull(name)) {
             throw new NoTpOrdningFound("No TP-account found for TP-nr: " + tpnr);
         } else {
             return name;
@@ -130,11 +130,11 @@ public class TpConfig {
     }
 
     public String leverandoerNameByTSSNr(String tssnr) {
-        var name = tpconfig.values().stream().filter((e)->e.getTssNumber().equals(tssnr)).
+        var name = tpconfig.values().stream().filter((e) -> e.getTssNumber().equals(tssnr)).
                 map(TPConfigData::getTpLeverandoerData).
-                map(TPLeverandoerData::gettPLeverandoerName).
+                map(TPLeverandoerData::getTpLeverandoerName).
                 findFirst().orElse(null);
-        if(Objects.isNull(name)) {
+        if (Objects.isNull(name)) {
             throw new NoTpOrdningFound("No TP-account found for TSS-nr: " + tssnr);
         } else {
             return name;

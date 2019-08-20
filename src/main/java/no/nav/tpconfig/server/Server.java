@@ -10,13 +10,13 @@ import java.util.Arrays;
 public class Server {
 
     private static final String ROOT_URL_PATH = "/";
-    private static final String METRICS_URL_PATH =  "metrics";
+    private static final String METRICS_URL_PATH = "metrics";
     private static final String IS_ALIVE_URL_PATH = "isAlive";
     private static final String IS_READY_URL_PATH = "isReady";
 
     private Undertow server;
 
-    public Server(String hostName, int port, Endpoint...endpoints) throws ServletException {
+    public Server(String hostName, int port, Endpoint... endpoints) throws ServletException {
 
         var metricsEndpoint = new MetricsEndpoint();
 

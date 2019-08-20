@@ -4,10 +4,10 @@ import io.undertow.server.HttpServerExchange;
 
 import java.util.function.Function;
 
-public class Utlis {
+class Utlis {
 
 
-    static String urlParamValue(HttpServerExchange exchange, String paramName) {
+    private static String urlParamValue(HttpServerExchange exchange, String paramName) {
         return exchange.getQueryParameters().get(paramName).getFirst();
     }
 
