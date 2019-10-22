@@ -76,6 +76,7 @@ public class TpConfig {
         addConfig("4161", gabler, "80000748054");
         addConfig("4162", gabler, "80000748052");
         addConfig("4163", gabler, "80000748056");
+        addConfig("4164", gabler, "80000795700");
 
         addConfig("3300", storebrand, "80000470771");
         addConfig("3670", storebrand, "80000470788");
