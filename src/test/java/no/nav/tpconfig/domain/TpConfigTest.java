@@ -1,5 +1,7 @@
 package no.nav.tpconfig.domain;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,6 +14,7 @@ public class TpConfigTest {
     private final static String TPNR_FOR_SPK = "3010";
     private final static String NON_EXISTING_TSSNR = "00";
     private final static String TSSNR_FOR_SPK = "80000470761";
+    private final static String ORGNR_FOR_SPK = "974713683";
     private final static String FICTIONAL_SERVICE_ACCOUNT = "srvElsam_Test";
     private final static String FICTIONAL_TPLEVERANDOERNAME = "TEST";
     private final static String FICTIONAL_ORGNR = "12345678911";
@@ -24,8 +27,10 @@ public class TpConfigTest {
     }
 
     @Test
-    public void serviceaccount_returns_SPK_SERVICE_ACCOUNT_when_tpnr_is_3010() {
-        assertEquals(SPK_SERVICE_ACCOUNT, tpConfig.serviceaccount(TPNR_FOR_SPK));
+    public void serviceaccount_returns_SPK_SERVICE_ACCOUNT_and_ORGNR_FOR_SPK_when_tpnr_is_3010() throws JSONException {
+        JSONObject response = tpConfig.serviceaccount(TPNR_FOR_SPK);
+        assertEquals(SPK_SERVICE_ACCOUNT, response.getString("serviceaccount"));
+        assertEquals(ORGNR_FOR_SPK, response.getString("orgnr"));
     }
 
     @Test(expected = NoTpOrdningFound.class)
@@ -34,9 +39,11 @@ public class TpConfigTest {
     }
 
     @Test
-    public void addConfig_adds_tpnr_and_serviceaccount_when_key_does_not_exist_in_tpconfig() {
+    public void addConfig_adds_tpnr_and_serviceaccount_when_key_does_not_exist_in_tpconfig() throws JSONException {
         tpConfig.addConfig(NON_EXISTING_TPNR, FICTIONALTPLEVERANDOERDATA, NON_EXISTING_TSSNR);
-        assertEquals(FICTIONAL_SERVICE_ACCOUNT, tpConfig.serviceaccount(NON_EXISTING_TPNR));
+        JSONObject response = tpConfig.serviceaccount(NON_EXISTING_TPNR);
+        assertEquals(FICTIONAL_SERVICE_ACCOUNT, response.getString("serviceaccount"));
+        assertEquals(FICTIONAL_ORGNR, response.getString("orgnr"));
     }
 
     @Test(expected = IllegalTpConfig.class)

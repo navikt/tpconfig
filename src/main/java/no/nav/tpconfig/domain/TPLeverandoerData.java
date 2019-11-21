@@ -5,7 +5,7 @@ final class TPLeverandoerData {
     private final String orgNr;
     private final String tPLeverandoerName;
 
-    TPLeverandoerData(String tPLeverandoerName, String serviceAccount,  String orgNr) {
+    TPLeverandoerData(String serviceAccount, String tPLeverandoerName, String orgNr) {
         this.serviceAccount = serviceAccount;
         this.orgNr = orgNr;
         this.tPLeverandoerName = tPLeverandoerName;

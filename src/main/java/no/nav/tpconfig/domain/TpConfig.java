@@ -1,5 +1,8 @@
 package no.nav.tpconfig.domain;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -116,14 +119,23 @@ public class TpConfig {
         tpconfig.put(tpNumber, new TPConfigData(tpLeverandoerData, tssNumber));
     }
 
-    public String serviceaccount(String tpnr) {
+    public JSONObject serviceaccount(String tpnr) {
         var tpData = tpconfig.get(tpnr);
         var tpLeverandoerData = tpData == null ? null : tpData.getTpLeverandoerData();
-        var serviceaccount = tpLeverandoerData == null ? null : tpLeverandoerData.getServiceAccount();
+        String serviceaccount = null;
+        String orgnr = null;
+        if (tpLeverandoerData != null){
+            serviceaccount = tpLeverandoerData.getServiceAccount();
+            orgnr = tpLeverandoerData.getOrgNr();
+        }
         if (Objects.isNull(serviceaccount)) {
             throw new NoTpOrdningFound("No serviceaccount found for TP-nr: " + tpnr);
         } else {
-            return serviceaccount;
+            try {
+                return new JSONObject().put("serviceaccount", serviceaccount).put("orgnr", orgnr);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

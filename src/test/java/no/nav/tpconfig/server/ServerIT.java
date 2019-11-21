@@ -5,6 +5,7 @@ import no.nav.tpconfig.domain.TestTpConfig;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.json.JSONObject;
 import org.junit.*;
 
 import javax.servlet.ServletException;
@@ -61,7 +62,10 @@ public class ServerIT {
         Request request = new Request.Builder().url(SERVICE_ACCOUNT_ENDPOINT_URL + TP_NUMBER_FOR_SPK).build();
         Response response = client.newCall(request).execute();
 
-        assertEquals(SERVICEACCOUNT_FOR_SPK, response.body().string());
+        JSONObject jsonResponse = new JSONObject(response.body().string());
+
+        assertEquals(SERVICEACCOUNT_FOR_SPK, jsonResponse.getString("serviceaccount"));
+        assertEquals(ORGNR_FOR_SPK, jsonResponse.getString("orgnr"));
         assertEquals(StatusCodes.OK, response.code());
     }
 
