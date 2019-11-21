@@ -14,8 +14,9 @@ public class TpConfigTest {
     private final static String TSSNR_FOR_SPK = "80000470761";
     private final static String FICTIONAL_SERVICE_ACCOUNT = "srvElsam_Test";
     private final static String FICTIONAL_TPLEVERANDOERNAME = "TEST";
+    private final static String FICTIONAL_ORGNR = "12345678911";
     private final static String SPK_SERVICE_ACCOUNT = "srvElsam_SPK";
-    private final static TPLeverandoerData FICTIONALTPLEVERANDOERDATA = new TPLeverandoerData(FICTIONAL_SERVICE_ACCOUNT, FICTIONAL_TPLEVERANDOERNAME);
+    private final static TPLeverandoerData FICTIONALTPLEVERANDOERDATA = new TPLeverandoerData(FICTIONAL_SERVICE_ACCOUNT, FICTIONAL_TPLEVERANDOERNAME, FICTIONAL_ORGNR);
 
     @Before
     public void setUp() {
@@ -50,12 +51,12 @@ public class TpConfigTest {
 
     @Test(expected = IllegalTpConfig.class)
     public void addConfig_throws_IllegalTpConfig_when_serviceaccount_is_null() {
-        tpConfig.addConfig(NON_EXISTING_TPNR, new TPLeverandoerData(null, FICTIONAL_TPLEVERANDOERNAME), NON_EXISTING_TSSNR);
+        tpConfig.addConfig(NON_EXISTING_TPNR, new TPLeverandoerData(null, FICTIONAL_TPLEVERANDOERNAME, FICTIONAL_ORGNR), NON_EXISTING_TSSNR);
     }
 
     @Test(expected = IllegalTpConfig.class)
     public void addConfig_throws_IllegalTpConfig_when_tpleverandoername_is_null() {
-        tpConfig.addConfig(NON_EXISTING_TPNR, new TPLeverandoerData(FICTIONAL_SERVICE_ACCOUNT, null), NON_EXISTING_TSSNR);
+        tpConfig.addConfig(NON_EXISTING_TPNR, new TPLeverandoerData(FICTIONAL_SERVICE_ACCOUNT, null, FICTIONAL_ORGNR), NON_EXISTING_TSSNR);
     }
 
     @Test(expected = IllegalTpConfig.class)

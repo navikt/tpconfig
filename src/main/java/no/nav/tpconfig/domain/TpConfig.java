@@ -16,6 +16,14 @@ public class TpConfig {
     private static final String OPF_SERVICEACCOUNT = "srvElsam_OPF";
     private static final String GFF_SERVICEACCOUNT = "srvElsam_GFF";
 
+    private static final String SPK_ORGNR = "974713683";
+    private static final String KLP_ORGNR = "938708606";
+    private static final String STOREBRAND_ORGNR = "958995369";
+    private static final String GABLER_ORGNR = "950842393";
+    private static final String PTS_ORGNR = "974707055";
+    private static final String OPF_ORGNR = "974588757";
+    private static final String GFF_ORGNR = "974652382";
+
     private static final String SPK = "SPK";
     private static final String KLP = "KLP";
     private static final String STOREBRAND = "STOREBRAND";
@@ -26,13 +34,13 @@ public class TpConfig {
 
     public TpConfig() {
 
-        final TPLeverandoerData spk = new TPLeverandoerData(SPK_SERVICEACCOUNT, SPK);
-        final TPLeverandoerData klp = new TPLeverandoerData(KLP_SERVICEACCOUNT, KLP);
-        final TPLeverandoerData storebrand = new TPLeverandoerData(STOREBRAND_SERVICEACCOUNT, STOREBRAND);
-        final TPLeverandoerData gabler = new TPLeverandoerData(GABLER_SERVICEACCOUNT, GABLER);
-        final TPLeverandoerData pts = new TPLeverandoerData(PTS_SERVICEACCOUNT, PTS);
-        final TPLeverandoerData opf = new TPLeverandoerData(OPF_SERVICEACCOUNT, OPF);
-        final TPLeverandoerData gff = new TPLeverandoerData(GFF_SERVICEACCOUNT, GFF);
+        final TPLeverandoerData spk = new TPLeverandoerData(SPK_SERVICEACCOUNT, SPK, SPK_ORGNR);
+        final TPLeverandoerData klp = new TPLeverandoerData(KLP_SERVICEACCOUNT, KLP, KLP_ORGNR);
+        final TPLeverandoerData storebrand = new TPLeverandoerData(STOREBRAND_SERVICEACCOUNT, STOREBRAND, STOREBRAND_ORGNR);
+        final TPLeverandoerData gabler = new TPLeverandoerData(GABLER_SERVICEACCOUNT, GABLER, GABLER_ORGNR);
+        final TPLeverandoerData pts = new TPLeverandoerData(PTS_SERVICEACCOUNT, PTS, PTS_ORGNR);
+        final TPLeverandoerData opf = new TPLeverandoerData(OPF_SERVICEACCOUNT, OPF, OPF_ORGNR);
+        final TPLeverandoerData gff = new TPLeverandoerData(GFF_SERVICEACCOUNT, GFF, GFF_ORGNR);
 
         addConfig("3010", spk, "80000470761");
 

@@ -26,6 +26,7 @@ public class ServerIT {
     private static final String METRICS_ENDPOINT_URL = "http://localhost:8080/metrics";
     private static final String TP_NUMBER_FOR_SPK = "3010";
     private static final String TSS_NUMBER_FOR_SPK = "80000470761";
+    private static final String ORGNR_FOR_SPK = "974713683";
     private static final String SERVICEACCOUNT_FOR_SPK = "srvElsam_SPK";
     private static final String TPLEVERANDOER_FOR_SPK = "SPK";
     private static final String NON_EXISTING_TP_NUMBER = "999999";
@@ -41,7 +42,7 @@ public class ServerIT {
     @Before
     public void setUp() throws ServletException {
         TestTpConfig testConfig = new TestTpConfig();
-        testConfig.addTestConfig(TP_NUMBER_FOR_SPK, SERVICEACCOUNT_FOR_SPK, TPLEVERANDOER_FOR_SPK, TSS_NUMBER_FOR_SPK);
+        testConfig.addTestConfig(TP_NUMBER_FOR_SPK, SERVICEACCOUNT_FOR_SPK, TPLEVERANDOER_FOR_SPK, TSS_NUMBER_FOR_SPK, ORGNR_FOR_SPK);
         server = new Server(LOCALHOST, PORT,
                 createTpNrToTPLeverandoerEndpoint(testConfig),
                 createTssNrToTPLeverandoerEndpoint(testConfig),
