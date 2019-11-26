@@ -5,6 +5,7 @@ import no.nav.tpconfig.domain.TestTpConfig;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.json.JSONObject;
 import org.junit.*;
 
 import javax.servlet.ServletException;
@@ -19,6 +20,7 @@ public class ServerIT {
     private static final int PORT = 8080;
     private static final String LOCALHOST = "localhost";
     private static final String SERVICE_ACCOUNT_ENDPOINT_URL = "http://localhost:8080/serviceaccount/";
+    private static final String ORGANISATION_ENDPOINT_URL = "http://localhost:8080/organisation/";
     private static final String TPLEVERANDOER_BY_TPNR_ENDPOINT_URL = "http://localhost:8080/tpleverandoer/";
     private static final String TPLEVERANDOER_BY_TSSNR_ENDPOINT_URL = "http://localhost:8080/tpleverandoer/tssnr/";
     private static final String IS_READY_ENDPOINT_URL = "http://localhost:8080/isAlive";
@@ -26,6 +28,7 @@ public class ServerIT {
     private static final String METRICS_ENDPOINT_URL = "http://localhost:8080/metrics";
     private static final String TP_NUMBER_FOR_SPK = "3010";
     private static final String TSS_NUMBER_FOR_SPK = "80000470761";
+    private static final String ORGNR_FOR_SPK = "974713683";
     private static final String SERVICEACCOUNT_FOR_SPK = "srvElsam_SPK";
     private static final String TPLEVERANDOER_FOR_SPK = "SPK";
     private static final String NON_EXISTING_TP_NUMBER = "999999";
@@ -41,11 +44,12 @@ public class ServerIT {
     @Before
     public void setUp() throws ServletException {
         TestTpConfig testConfig = new TestTpConfig();
-        testConfig.addTestConfig(TP_NUMBER_FOR_SPK, SERVICEACCOUNT_FOR_SPK, TPLEVERANDOER_FOR_SPK, TSS_NUMBER_FOR_SPK);
+        testConfig.addTestConfig(TP_NUMBER_FOR_SPK, SERVICEACCOUNT_FOR_SPK, TPLEVERANDOER_FOR_SPK, TSS_NUMBER_FOR_SPK, ORGNR_FOR_SPK);
         server = new Server(LOCALHOST, PORT,
                 createTpNrToTPLeverandoerEndpoint(testConfig),
                 createTssNrToTPLeverandoerEndpoint(testConfig),
-                createServiceAccountEndpoint(testConfig));
+                createServiceAccountEndpoint(testConfig),
+                createOrganisationEndpoint(testConfig));
         server.run();
         client = new OkHttpClient();
     }
@@ -56,12 +60,33 @@ public class ServerIT {
     }
 
     @Test
+    public void tpNumberToOrganisation_returns_serviceaccount_and_orgnr_for_SPK_when_correct_tpnr_is_provided() throws Exception {
+        Request request = new Request.Builder().url(ORGANISATION_ENDPOINT_URL + TP_NUMBER_FOR_SPK).build();
+        Response response = client.newCall(request).execute();
+
+        JSONObject jsonResponse = new JSONObject(response.body().string());
+
+        assertEquals(SERVICEACCOUNT_FOR_SPK, jsonResponse.getString("serviceaccount"));
+        assertEquals(ORGNR_FOR_SPK, jsonResponse.getString("orgnr"));
+        assertEquals(StatusCodes.OK, response.code());
+    }
+
+    @Test
     public void tpNumberToServiceAccount_returns_serviceaccount_for_SPK_when_correct_tpnr_is_provided() throws Exception {
         Request request = new Request.Builder().url(SERVICE_ACCOUNT_ENDPOINT_URL + TP_NUMBER_FOR_SPK).build();
         Response response = client.newCall(request).execute();
 
         assertEquals(SERVICEACCOUNT_FOR_SPK, response.body().string());
         assertEquals(StatusCodes.OK, response.code());
+    }
+
+    @Test
+    public void tpNumberToOrganisation_returns_error_message_when_non_existing_tpnr_is_provided() throws Exception {
+        Request request = new Request.Builder().url(SERVICE_ACCOUNT_ENDPOINT_URL + NON_EXISTING_TP_NUMBER).build();
+        Response response = client.newCall(request).execute();
+
+        assertEquals(StatusCodes.NOT_FOUND, response.code());
+        assertEquals(NO_SERVICEACCOUNT_ORDNING_FOUND_FOR_TP_NR + NON_EXISTING_TP_NUMBER, response.body().string());
     }
 
     @Test

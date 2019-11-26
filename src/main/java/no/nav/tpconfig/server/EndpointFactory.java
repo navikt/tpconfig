@@ -1,6 +1,7 @@
 package no.nav.tpconfig.server;
 
 import no.nav.tpconfig.domain.TpConfig;
+import org.json.JSONObject;
 
 import static no.nav.tpconfig.server.MetricsBuilder.metricFor;
 
@@ -12,6 +13,7 @@ public class EndpointFactory {
     private static final String SERVICE_ACCOUNT_PATH = String.format("serviceaccount/{%s}", TPNR_URL_PARAMETER_NAME);
     private static final String LEVERANDOR_BY_TPNR_PATH = String.format("tpleverandoer/{%s}", TPNR_URL_PARAMETER_NAME);
     private static final String LEVERANDOR_BY_TSSNR_PATH = String.format("tpleverandoer/tssnr/{%s}", TSSNR_URL_PARAMETER_NAME);
+    private static final String ORGANISATION_PATH = String.format("organisation/{%s}", TPNR_URL_PARAMETER_NAME);
 
 
     private final static Metrics METRICS_FOR_SERVICEACCOUNT_ENDPOINT = metricFor("tp_config_serviceaccount")
@@ -29,8 +31,11 @@ public class EndpointFactory {
             .withNotFoundCounter("Antall tpleverandoerer ikke funnet basert på tssnr i request")
             .withReceivedCounter("Antall requests mottatt til tpleverandoer for tssnr endepunkt")
             .createMetrics();
+    private static final Metrics METRICS_FOR_ORGANISATION_ENDPOINT = metricFor("tp_config_organisation")
+            .withReceivedCounter("Antall requests mottatt til orgnaisation endepunkt")
+            .createMetrics();
 
-    public static Endpoint<String> createServiceAccountEndpoint(TpConfig tpConfig) {
+    public static Endpoint<String, String> createServiceAccountEndpoint(TpConfig tpConfig) {
         return new Endpoint<>(
                 METRICS_FOR_SERVICEACCOUNT_ENDPOINT,
                 Utlis.urlParamExtractor(TPNR_URL_PARAMETER_NAME),
@@ -39,7 +44,7 @@ public class EndpointFactory {
         );
     }
 
-    public static Endpoint<String> createTpNrToTPLeverandoerEndpoint(TpConfig tpConfig) {
+    public static Endpoint<String, String> createTpNrToTPLeverandoerEndpoint(TpConfig tpConfig) {
         return new Endpoint<>(
                 METRICS_FOR_TPNR_TO_TPLEVERANDOER,
                 Utlis.urlParamExtractor(TPNR_URL_PARAMETER_NAME),
@@ -48,7 +53,7 @@ public class EndpointFactory {
         );
     }
 
-    public static Endpoint<String> createTssNrToTPLeverandoerEndpoint(TpConfig tpConfig) {
+    public static Endpoint<String, String> createTssNrToTPLeverandoerEndpoint(TpConfig tpConfig) {
         return new Endpoint<>(
                 METRICS_FOR_TSSNR_TO_TPLEVERANDOER,
                 Utlis.urlParamExtractor(TSSNR_URL_PARAMETER_NAME),
@@ -57,4 +62,12 @@ public class EndpointFactory {
         );
     }
 
+    public static Endpoint<String, JSONObject> createOrganisationEndpoint(TpConfig tpConfig) {
+        return new Endpoint<>(
+                METRICS_FOR_ORGANISATION_ENDPOINT,
+                Utlis.urlParamExtractor(TPNR_URL_PARAMETER_NAME),
+                tpConfig::organisation,
+                ORGANISATION_PATH
+        );
+    }
 }

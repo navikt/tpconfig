@@ -2,10 +2,12 @@ package no.nav.tpconfig.domain;
 
 final class TPLeverandoerData {
     private final String serviceAccount;
+    private final String orgNr;
     private final String tPLeverandoerName;
 
-    TPLeverandoerData(String serviceAccount, String tPLeverandoerName) {
+    TPLeverandoerData(String serviceAccount, String tPLeverandoerName, String orgNr) {
         this.serviceAccount = serviceAccount;
+        this.orgNr = orgNr;
         this.tPLeverandoerName = tPLeverandoerName;
     }
 
@@ -15,5 +17,9 @@ final class TPLeverandoerData {
 
     String getServiceAccount() {
         return serviceAccount;
+    }
+
+    String getOrgNr() {
+        return orgNr;
     }
 }

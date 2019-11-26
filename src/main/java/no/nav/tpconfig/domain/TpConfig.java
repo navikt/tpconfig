@@ -1,5 +1,8 @@
 package no.nav.tpconfig.domain;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -16,6 +19,14 @@ public class TpConfig {
     private static final String OPF_SERVICEACCOUNT = "srvElsam_OPF";
     private static final String GFF_SERVICEACCOUNT = "srvElsam_GFF";
 
+    private static final String SPK_ORGNR = "974713683";
+    private static final String KLP_ORGNR = "938708606";
+    private static final String STOREBRAND_ORGNR = "958995369";
+    private static final String GABLER_ORGNR = "950842393";
+    private static final String PTS_ORGNR = "974707055";
+    private static final String OPF_ORGNR = "974588757";
+    private static final String GFF_ORGNR = "974652382";
+
     private static final String SPK = "SPK";
     private static final String KLP = "KLP";
     private static final String STOREBRAND = "STOREBRAND";
@@ -26,13 +37,13 @@ public class TpConfig {
 
     public TpConfig() {
 
-        final TPLeverandoerData spk = new TPLeverandoerData(SPK_SERVICEACCOUNT, SPK);
-        final TPLeverandoerData klp = new TPLeverandoerData(KLP_SERVICEACCOUNT, KLP);
-        final TPLeverandoerData storebrand = new TPLeverandoerData(STOREBRAND_SERVICEACCOUNT, STOREBRAND);
-        final TPLeverandoerData gabler = new TPLeverandoerData(GABLER_SERVICEACCOUNT, GABLER);
-        final TPLeverandoerData pts = new TPLeverandoerData(PTS_SERVICEACCOUNT, PTS);
-        final TPLeverandoerData opf = new TPLeverandoerData(OPF_SERVICEACCOUNT, OPF);
-        final TPLeverandoerData gff = new TPLeverandoerData(GFF_SERVICEACCOUNT, GFF);
+        final TPLeverandoerData spk = new TPLeverandoerData(SPK_SERVICEACCOUNT, SPK, SPK_ORGNR);
+        final TPLeverandoerData klp = new TPLeverandoerData(KLP_SERVICEACCOUNT, KLP, KLP_ORGNR);
+        final TPLeverandoerData storebrand = new TPLeverandoerData(STOREBRAND_SERVICEACCOUNT, STOREBRAND, STOREBRAND_ORGNR);
+        final TPLeverandoerData gabler = new TPLeverandoerData(GABLER_SERVICEACCOUNT, GABLER, GABLER_ORGNR);
+        final TPLeverandoerData pts = new TPLeverandoerData(PTS_SERVICEACCOUNT, PTS, PTS_ORGNR);
+        final TPLeverandoerData opf = new TPLeverandoerData(OPF_SERVICEACCOUNT, OPF, OPF_ORGNR);
+        final TPLeverandoerData gff = new TPLeverandoerData(GFF_SERVICEACCOUNT, GFF, GFF_ORGNR);
 
         addConfig("3010", spk, "80000470761");
 
@@ -139,6 +150,26 @@ public class TpConfig {
             throw new NoTpOrdningFound("No TP-account found for TSS-nr: " + tssnr);
         } else {
             return name;
+        }
+    }
+
+    public JSONObject organisation(String tpnr) {
+        var tpData = tpconfig.get(tpnr);
+        var tpLeverandoerData = tpData == null ? null : tpData.getTpLeverandoerData();
+        String serviceaccount = null;
+        String orgnr = null;
+        if (tpLeverandoerData != null){
+            serviceaccount = tpLeverandoerData.getServiceAccount();
+            orgnr = tpLeverandoerData.getOrgNr();
+        }
+        if (Objects.isNull(serviceaccount)) {
+            throw new NoTpOrdningFound("No organisation found for TP-nr: " + tpnr);
+        } else {
+            try {
+                return new JSONObject().put("serviceaccount", serviceaccount).put("orgnr", orgnr);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
