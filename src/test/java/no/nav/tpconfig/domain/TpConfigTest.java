@@ -27,8 +27,13 @@ public class TpConfigTest {
     }
 
     @Test
-    public void serviceaccount_returns_SPK_SERVICE_ACCOUNT_and_ORGNR_FOR_SPK_when_tpnr_is_3010() throws JSONException {
-        JSONObject response = tpConfig.serviceaccount(TPNR_FOR_SPK);
+    public void serviceaccount_returns_SPK_SERVICE_ACCOUNT_when_tpnr_is_3010() {
+        assertEquals(SPK_SERVICE_ACCOUNT, tpConfig.serviceaccount(TPNR_FOR_SPK));
+    }
+
+    @Test
+    public void organisation_returns_SPK_SERVICE_ACCOUNT_and_ORGNR_FOR_SPK_when_tpnr_is_3010() throws JSONException {
+        JSONObject response = tpConfig.organisation(TPNR_FOR_SPK);
         assertEquals(SPK_SERVICE_ACCOUNT, response.getString("serviceaccount"));
         assertEquals(ORGNR_FOR_SPK, response.getString("orgnr"));
     }
@@ -38,12 +43,20 @@ public class TpConfigTest {
         tpConfig.serviceaccount(NON_EXISTING_TPNR);
     }
 
+    @Test(expected = NoTpOrdningFound.class)
+    public void organisation_returns_error_message_given_nonexisting_tpnr() {
+        tpConfig.organisation(NON_EXISTING_TPNR);
+    }
+
     @Test
     public void addConfig_adds_tpnr_and_serviceaccount_when_key_does_not_exist_in_tpconfig() throws JSONException {
         tpConfig.addConfig(NON_EXISTING_TPNR, FICTIONALTPLEVERANDOERDATA, NON_EXISTING_TSSNR);
-        JSONObject response = tpConfig.serviceaccount(NON_EXISTING_TPNR);
-        assertEquals(FICTIONAL_SERVICE_ACCOUNT, response.getString("serviceaccount"));
-        assertEquals(FICTIONAL_ORGNR, response.getString("orgnr"));
+        String serviceaccountResponse = tpConfig.serviceaccount(NON_EXISTING_TPNR);
+        assertEquals(FICTIONAL_SERVICE_ACCOUNT, serviceaccountResponse);
+
+        JSONObject organisationResponse = tpConfig.organisation(NON_EXISTING_TPNR);
+        assertEquals(FICTIONAL_SERVICE_ACCOUNT, organisationResponse.getString("serviceaccount"));
+        assertEquals(FICTIONAL_ORGNR, organisationResponse.getString("orgnr"));
     }
 
     @Test(expected = IllegalTpConfig.class)

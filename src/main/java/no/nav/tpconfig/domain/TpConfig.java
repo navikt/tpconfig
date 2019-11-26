@@ -119,23 +119,14 @@ public class TpConfig {
         tpconfig.put(tpNumber, new TPConfigData(tpLeverandoerData, tssNumber));
     }
 
-    public JSONObject serviceaccount(String tpnr) {
+    public String serviceaccount(String tpnr) {
         var tpData = tpconfig.get(tpnr);
         var tpLeverandoerData = tpData == null ? null : tpData.getTpLeverandoerData();
-        String serviceaccount = null;
-        String orgnr = null;
-        if (tpLeverandoerData != null){
-            serviceaccount = tpLeverandoerData.getServiceAccount();
-            orgnr = tpLeverandoerData.getOrgNr();
-        }
+        var serviceaccount = tpLeverandoerData == null ? null : tpLeverandoerData.getServiceAccount();
         if (Objects.isNull(serviceaccount)) {
             throw new NoTpOrdningFound("No serviceaccount found for TP-nr: " + tpnr);
         } else {
-            try {
-                return new JSONObject().put("serviceaccount", serviceaccount).put("orgnr", orgnr);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            return serviceaccount;
         }
     }
 
@@ -159,6 +150,26 @@ public class TpConfig {
             throw new NoTpOrdningFound("No TP-account found for TSS-nr: " + tssnr);
         } else {
             return name;
+        }
+    }
+
+    public JSONObject organisation(String tpnr) {
+        var tpData = tpconfig.get(tpnr);
+        var tpLeverandoerData = tpData == null ? null : tpData.getTpLeverandoerData();
+        String serviceaccount = null;
+        String orgnr = null;
+        if (tpLeverandoerData != null){
+            serviceaccount = tpLeverandoerData.getServiceAccount();
+            orgnr = tpLeverandoerData.getOrgNr();
+        }
+        if (Objects.isNull(serviceaccount)) {
+            throw new NoTpOrdningFound("No organisation found for TP-nr: " + tpnr);
+        } else {
+            try {
+                return new JSONObject().put("serviceaccount", serviceaccount).put("orgnr", orgnr);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
