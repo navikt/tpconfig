@@ -19,7 +19,7 @@ public class TpConfig {
     private static final String OPF_SERVICEACCOUNT = "srvElsam_OPF";
     private static final String GFF_SERVICEACCOUNT = "srvElsam_GFF";
 
-    private static final String SPK_ORGNR = "974713683";
+    private static final String SPK_ORGNR = "982583462";
     private static final String KLP_ORGNR = "938708606";
     private static final String STOREBRAND_ORGNR = "958995369";
     private static final String GABLER_ORGNR = "950842393";
