@@ -14,7 +14,7 @@ public class TpConfigTest {
     private final static String TPNR_FOR_SPK = "3010";
     private final static String NON_EXISTING_TSSNR = "00";
     private final static String TSSNR_FOR_SPK = "80000470761";
-    private final static String ORGNR_FOR_SPK = "974713683";
+    private final static String ORGNR_FOR_SPK = "982583462";
     private final static String FICTIONAL_SERVICE_ACCOUNT = "srvElsam_Test";
     private final static String FICTIONAL_TPLEVERANDOERNAME = "TEST";
     private final static String FICTIONAL_ORGNR = "12345678911";
