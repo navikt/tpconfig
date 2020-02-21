@@ -24,7 +24,7 @@ public class TpConfig {
     private static final String STOREBRAND_ORGNR = "958995369";
     private static final String GABLER_ORGNR = "950842393";
     private static final String PTS_ORGNR = "974707055";
-    private static final String OPF_ORGNR = "974588757";
+    private static final String OPF_ORGNR = "982759412";
     private static final String GFF_ORGNR = "974652382";
 
     private static final String SPK = "SPK";
