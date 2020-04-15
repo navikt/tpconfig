@@ -2,7 +2,7 @@ name: Release to GitHub Package Registry
 
 on:
   push:
-    branches: PL-1419-migrated-to-github-actions
+    branches: master
 
 jobs:
   build_and_release:
