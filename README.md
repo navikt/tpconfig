@@ -37,6 +37,6 @@ Se [tpconfig grafana dasboard](https://grafana.adeo.no/d/wcmOPO0ik/tpconfig?orgI
 [Kibana](https://logs.adeo.no/app/kibana) benyttes til logging. Søk på f.eks. ```application:tpconfig AND environment:q``` for logginnslag fra preprod.
 
 #### Bygging
-Jenkins benyttes til bygging. Status på bygg finner du her: [tpconfig jenkins](https://jenkins-peon.adeo.no/job/tpconfig/)
+Github Actions benyttes til bygging.
 
-Kontakt Team Peon dersom du har noen spørsmål. Vi finnes blant annet på Slack, i kanalen [#peon](https://nav-it.slack.com/messages/C6M80587R/)
+Kontakt Team Peon dersom du har noen spørsmål. Vi finnes blant annet på Slack, i kanalen [#samhandling_pensjonsområdet](https://nav-it.slack.com/archives/CQ08JC3UG)
