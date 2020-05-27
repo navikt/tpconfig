@@ -26,3 +26,8 @@ spec:
       memory: 256Mi
   prometheus:
     enabled: true
+  vault:
+    enabled: true
+    paths:
+      - kvPath: /apikey/appdynamics/dev
+        mountPath: /var/run/secrets/nais.io/vault
