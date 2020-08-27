@@ -10,6 +10,8 @@ spec:
   port: 8080
   ingresses:
     - https://tpconfig.nais.preprod.local
+    - https://tpconfig.dev-fss.nais.io
+    - https://tpconfig.dev.adeo.no
   liveness:
     path: isAlive
   readiness:
