@@ -153,6 +153,16 @@ public class TpConfig {
         }
     }
 
+    public String TSSNrByTPNr(String tpnr) {
+        var tpData = tpconfig.get(tpnr);
+        var tssnr = tpData == null ? null : tpData.getTssNumber();
+        if (Objects.isNull(tssnr)) {
+            throw new NoTpOrdningFound("No TSS-nr found for TP-nr: " + tpnr);
+        } else {
+            return tssnr;
+        }
+    }
+
     public JSONObject organisation(String tpnr) {
         var tpData = tpconfig.get(tpnr);
         var tpLeverandoerData = tpData == null ? null : tpData.getTpLeverandoerData();

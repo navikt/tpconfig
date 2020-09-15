@@ -31,6 +31,7 @@ class Application {
                     createServiceAccountEndpoint(tpConfig),
                     createTpNrToTPLeverandoerEndpoint(tpConfig),
                     createTssNrToTPLeverandoerEndpoint(tpConfig),
+                    createTpNrToTssNrEndpoint(tpConfig),
                     createOrganisationEndpoint((tpConfig)));
             LOG.info(String.format("Starting server on host: %s:%s", hostName, PORT));
             server.run();
