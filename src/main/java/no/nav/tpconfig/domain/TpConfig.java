@@ -58,6 +58,7 @@ public class TpConfig {
         addConfig("4082", klp, "80000750000");
 
         addConfig("3110", gabler, "80000470765");
+        addConfig("3300", gabler, "80000470771");
         addConfig("3410", gabler, "80000470772");
         addConfig("3420", gabler, "80000470774");
         addConfig("3440", gabler, "80000748046");
@@ -89,7 +90,7 @@ public class TpConfig {
         addConfig("4163", gabler, "80000748056");
         addConfig("4164", gabler, "80000795700");
 
-        addConfig("3300", storebrand, "80000470771");
+
         addConfig("3670", storebrand, "80000470788");
         addConfig("3672", storebrand, "80000470790");
         addConfig("4081", storebrand, "80000749994");
