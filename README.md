@@ -39,4 +39,4 @@ Se [tpconfig grafana dasboard](https://grafana.adeo.no/d/wcmOPO0ik/tpconfig?orgI
 #### Bygging
 Github Actions benyttes til bygging.
 
-Kontakt Team Peon dersom du har noen spørsmål. Vi finnes blant annet på Slack, i kanalen [#samhandling_pensjonsområdet](https://nav-it.slack.com/archives/CQ08JC3UG)
+Kontakt Team Samhandling dersom du har noen spørsmål. Vi finnes blant annet på Slack, i kanalen [#samhandling_pensjonsområdet](https://nav-it.slack.com/archives/CQ08JC3UG)
