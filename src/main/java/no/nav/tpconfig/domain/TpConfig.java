@@ -21,8 +21,7 @@ public class TpConfig {
 
     private static final String SPK_ORGNR = "982583462";
     private static final String KLP_ORGNR = "938708606";
-    private static final String STOREBRAND_LIV_ORGNR = "958995369";
-    private static final String STOREBRAND_PEN_ORGNR = "931936492";
+    private static final String STOREBRAND_ORGNR = "958995369";
     private static final String GABLER_ORGNR = "916833520";
     private static final String PTS_ORGNR = "974707055";
     private static final String OPF_ORGNR = "982759412";
@@ -30,8 +29,7 @@ public class TpConfig {
 
     private static final String SPK = "SPK";
     private static final String KLP = "KLP";
-    private static final String STOREBRAND_LIV = "STOREBRAND";
-    private static final String STOREBRAND_PEN = "STOREBRAND";
+    private static final String STOREBRAND = "STOREBRAND";
     private static final String GABLER = "GABLER";
     private static final String PTS = "PTS";
     private static final String OPF = "OPF";
@@ -41,8 +39,7 @@ public class TpConfig {
 
         final TPLeverandoerData spk = new TPLeverandoerData(SPK_SERVICEACCOUNT, SPK, SPK_ORGNR);
         final TPLeverandoerData klp = new TPLeverandoerData(KLP_SERVICEACCOUNT, KLP, KLP_ORGNR);
-        final TPLeverandoerData storebrand_liv = new TPLeverandoerData(STOREBRAND_SERVICEACCOUNT, STOREBRAND_LIV, STOREBRAND_LIV_ORGNR);
-        final TPLeverandoerData storebrand_pen = new TPLeverandoerData(STOREBRAND_SERVICEACCOUNT, STOREBRAND_PEN, STOREBRAND_PEN_ORGNR);
+        final TPLeverandoerData storebrand = new TPLeverandoerData(STOREBRAND_SERVICEACCOUNT, STOREBRAND, STOREBRAND_ORGNR);
         final TPLeverandoerData gabler = new TPLeverandoerData(GABLER_SERVICEACCOUNT, GABLER, GABLER_ORGNR);
         final TPLeverandoerData pts = new TPLeverandoerData(PTS_SERVICEACCOUNT, PTS, PTS_ORGNR);
         final TPLeverandoerData opf = new TPLeverandoerData(OPF_SERVICEACCOUNT, OPF, OPF_ORGNR);
@@ -94,16 +91,16 @@ public class TpConfig {
         addConfig("4164", gabler, "80000795700");
 
 
-        addConfig("3670", storebrand_liv, "80000470788");
-        addConfig("3672", storebrand_liv, "80000470790");
-        addConfig("4081", storebrand_liv, "80000749994");
-        addConfig("4083", storebrand_liv, "80000749998");
-        addConfig("4095", storebrand_liv, "80000470818");
-        addConfig("4096", storebrand_liv, "80000619165");
-        addConfig("4098", storebrand_pen, "80000515880");
-        addConfig("4150", storebrand_liv, "80000470820");
-        addConfig("4157", storebrand_liv, "80000783960");
-        addConfig("4158", storebrand_liv, "80000783962");
+        addConfig("3670", storebrand, "80000470788");
+        addConfig("3672", storebrand, "80000470790");
+        addConfig("4081", storebrand, "80000749994");
+        addConfig("4083", storebrand, "80000749998");
+        addConfig("4095", storebrand, "80000470818");
+        addConfig("4096", storebrand, "80000619165");
+        addConfig("4098", storebrand, "80000515880");
+        addConfig("4150", storebrand, "80000470820");
+        addConfig("4157", storebrand, "80000783960");
+        addConfig("4158", storebrand, "80000783962");
     }
 
     void addConfig(String tpNumber, TPLeverandoerData tpLeverandoerData, String tssNumber) {
