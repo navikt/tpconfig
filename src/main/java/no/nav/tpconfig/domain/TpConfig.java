@@ -164,6 +164,27 @@ public class TpConfig {
         }
     }
 
+    public Boolean validateTpLeverandorForTpOrdning(String tpnr_orgnr) {
+        var tpnr = tpnr_orgnr.split("_")[0];
+        var orgnr = tpnr_orgnr.split("_")[1];
+
+        var tpData = tpconfig.get(tpnr);
+        if (tpData == null) {
+            throw new NoTpOrdningFound("No TP-account found for TSS-nr: " + tpnr);
+        } else {
+            if (tpData.getTpLeverandoerData() == null) {
+                throw new NoTpOrdningFound("Organisation " + orgnr + " is not assigned as TP-leverandor for tp-account with TP-pr: " + tpnr);
+            } else {
+                if (tpData.getTpLeverandoerData().getOrgNr().equals(orgnr)) {
+                    return true;
+                }
+                else {
+                    throw new NoTpOrdningFound("Organisation " + orgnr + " is not assigned as TP-leverandor for tp-account with TP-pr: " + tpnr);
+                }
+            }
+        }
+    }
+
     public JSONObject organisation(String tpnr) {
         var tpData = tpconfig.get(tpnr);
         var tpLeverandoerData = tpData == null ? null : tpData.getTpLeverandoerData();

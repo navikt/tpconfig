@@ -23,6 +23,7 @@ public class ServerIT {
     private static final String ORGANISATION_ENDPOINT_URL = "http://localhost:8080/organisation/";
     private static final String TPLEVERANDOER_BY_TPNR_ENDPOINT_URL = "http://localhost:8080/tpleverandoer/";
     private static final String TPLEVERANDOER_BY_TSSNR_ENDPOINT_URL = "http://localhost:8080/tpleverandoer/tssnr/";
+    private static final String VALIDATE_LEVERANDOR_BY_TPNR_AND_ORGNR_ENDPOINT_URL = "http://localhost:8080/organisation/validate/";
     private static final String TSSNR_BY_TPNR_ENDPOINT_URL = "http://localhost:8080/tssnr/";
     private static final String IS_READY_ENDPOINT_URL = "http://localhost:8080/isAlive";
     private static final String IS_ALIVE_ENDPOINT_URL = "http://localhost:8080/isReady";
@@ -52,7 +53,8 @@ public class ServerIT {
                 createTssNrToTPLeverandoerEndpoint(testConfig),
                 createTpNrToTssNrEndpoint(testConfig),
                 createServiceAccountEndpoint(testConfig),
-                createOrganisationEndpoint(testConfig));
+                createOrganisationEndpoint(testConfig),
+                createValidateLeverandorByTpnrAndOrgnrEndpoint(testConfig));
         server.run();
         client = new OkHttpClient();
     }
@@ -134,6 +136,22 @@ public class ServerIT {
         Response response = client.newCall(request).execute();
 
         assertEquals(NO_TP_LEVERANDOER_FOUND_FOR_TSS_NR + NON_EXISTING_TSS_NUMBER, response.body().string());
+        assertEquals(StatusCodes.NOT_FOUND, response.code());
+    }
+
+    @Test
+    public void validateLeverandorByTpnrAndOrgnr() throws IOException {
+        Request request = new Request.Builder().url(VALIDATE_LEVERANDOR_BY_TPNR_AND_ORGNR_ENDPOINT_URL + TP_NUMBER_FOR_SPK + "_" + ORGNR_FOR_SPK).build();
+        Response response = client.newCall(request).execute();
+
+        assertEquals(StatusCodes.OK, response.code());
+    }
+
+    @Test
+    public void validateStatuscode400WhenTpnrAndOrgnrDontMatch() throws IOException {
+        Request request = new Request.Builder().url(VALIDATE_LEVERANDOR_BY_TPNR_AND_ORGNR_ENDPOINT_URL + TP_NUMBER_FOR_SPK + "_" + "90000").build();
+        Response response = client.newCall(request).execute();
+
         assertEquals(StatusCodes.NOT_FOUND, response.code());
     }
 
