@@ -6,7 +6,6 @@ import java.util.function.Function;
 
 class Utlis {
 
-
     private static String urlParamValue(HttpServerExchange exchange, String paramName) {
         return exchange.getQueryParameters().get(paramName).getFirst();
     }
